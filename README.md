@@ -161,6 +161,7 @@ module "iosxe" {
 | [iosxe_interface_port_channel_subinterface.port_channel_subinterface](https://registry.terraform.io/providers/CiscoDevNet/iosxe/0.11.0/docs/resources/interface_port_channel_subinterface) | resource |
 | [iosxe_interface_switchport.ethernet_switchport](https://registry.terraform.io/providers/CiscoDevNet/iosxe/0.11.0/docs/resources/interface_switchport) | resource |
 | [iosxe_interface_switchport.port_channel_switchport](https://registry.terraform.io/providers/CiscoDevNet/iosxe/0.11.0/docs/resources/interface_switchport) | resource |
+| [iosxe_interface_tunnel.tunnel](https://registry.terraform.io/providers/CiscoDevNet/iosxe/0.11.0/docs/resources/interface_tunnel) | resource |
 | [iosxe_interface_vlan.vlan](https://registry.terraform.io/providers/CiscoDevNet/iosxe/0.11.0/docs/resources/interface_vlan) | resource |
 | [iosxe_isis.isis](https://registry.terraform.io/providers/CiscoDevNet/iosxe/0.11.0/docs/resources/isis) | resource |
 | [iosxe_license.license](https://registry.terraform.io/providers/CiscoDevNet/iosxe/0.11.0/docs/resources/license) | resource |

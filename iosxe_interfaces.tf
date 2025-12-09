@@ -1595,3 +1595,118 @@ resource "iosxe_interface_nve" "nve" {
 
   depends_on = [iosxe_vrf.vrf]
 }
+
+##### TUNNELS #####
+
+locals {
+  interfaces_tunnels = flatten([
+    for device in local.devices : [
+      for int in try(local.device_config[device.name].interfaces.tunnels, []) : {
+        key                            = format("%s/Tunnel%s", device.name, int.name)
+        device                         = device.name
+        id                             = int.name
+        description                    = try(int.description, local.defaults.iosxe.devices.configuration.interfaces.tunnels.description, null)
+        shutdown                       = try(int.shutdown, local.defaults.iosxe.devices.configuration.interfaces.tunnels.shutdown, false)
+        vrf_forwarding                 = try(int.vrf_forwarding, local.defaults.iosxe.devices.configuration.interfaces.tunnels.vrf_forwarding, null)
+        ipv4_address                   = try(int.ipv4.address, local.defaults.iosxe.devices.configuration.interfaces.tunnels.ipv4.address, null)
+        ipv4_address_mask              = try(int.ipv4.address_mask, local.defaults.iosxe.devices.configuration.interfaces.tunnels.ipv4.address_mask, null)
+        ip_proxy_arp                   = try(int.ipv4.proxy_arp, local.defaults.iosxe.devices.configuration.interfaces.tunnels.ipv4.proxy_arp, null)
+        ip_access_group_in             = try(int.ipv4.access_group_in, local.defaults.iosxe.devices.configuration.interfaces.tunnels.ipv4.access_group_in, null)
+        ip_access_group_in_enable      = try(int.ipv4.access_group_in, local.defaults.iosxe.devices.configuration.interfaces.tunnels.ipv4.access_group_in, null) != null ? true : false
+        ip_access_group_out            = try(int.ipv4.access_group_out, local.defaults.iosxe.devices.configuration.interfaces.tunnels.ipv4.access_group_out, null)
+        ip_access_group_out_enable     = try(int.ipv4.access_group_out, local.defaults.iosxe.devices.configuration.interfaces.tunnels.ipv4.access_group_out, null) != null ? true : false
+        ip_redirects                   = try(int.ipv4.redirects, local.defaults.iosxe.devices.configuration.interfaces.tunnels.ipv4.redirects, null)
+        ip_unreachables                = try(int.ipv4.unreachables, local.defaults.iosxe.devices.configuration.interfaces.tunnels.ipv4.unreachables, null)
+        ip_dhcp_relay_source_interface = try(int.ipv4.dhcp_relay_source_interface, local.defaults.iosxe.devices.configuration.interfaces.tunnels.ipv4.dhcp_relay_source_interface, null)
+        helper_addresses = try(length(int.ipv4.helper_addresses) == 0, true) ? null : [for ha in int.ipv4.helper_addresses : {
+          address = ha.address
+          global  = try(ha.global, local.defaults.iosxe.devices.configuration.interfaces.tunnels.ipv4.helper_addresses.global, null)
+          vrf     = try(ha.vrf, local.defaults.iosxe.devices.configuration.interfaces.tunnels.ipv4.helper_addresses.vrf, null)
+        }]
+        ipv6_enable = try(int.ipv6.enable, local.defaults.iosxe.devices.configuration.interfaces.tunnels.ipv6.enable, null)
+        ipv6_addresses = try(length(int.ipv6.addresses) == 0, true) ? null : [for addr in int.ipv6.addresses : {
+          prefix = "${try(addr.prefix, local.defaults.iosxe.devices.configuration.interfaces.tunnels.ipv6.addresses.prefix, null)}/${try(addr.prefix_length, local.defaults.iosxe.devices.configuration.interfaces.tunnels.ipv6.addresses.prefix_length, null)}"
+          eui64  = try(addr.eui64, local.defaults.iosxe.devices.configuration.interfaces.tunnels.ipv6.addresses.eui64, null)
+        }]
+        ipv6_link_local_addresses = try(length(int.ipv6.link_local_addresses) == 0, true) ? null : [for addr in int.ipv6.link_local_addresses : {
+          address    = addr
+          link_local = true
+        }]
+        ipv6_address_autoconfig_default  = try(int.ipv6.address_autoconfig_default, local.defaults.iosxe.devices.configuration.interfaces.tunnels.ipv6.address_autoconfig_default, null)
+        ipv6_address_dhcp                = try(int.ipv6.address_dhcp, local.defaults.iosxe.devices.configuration.interfaces.tunnels.ipv6.address_dhcp, null)
+        ipv6_mtu                         = try(int.ipv6.mtu, local.defaults.iosxe.devices.configuration.interfaces.tunnels.ipv6.mtu, null)
+        ipv6_nd_ra_suppress_all          = try(int.ipv6.nd_ra_suppress_all, local.defaults.iosxe.devices.configuration.interfaces.tunnels.ipv6.nd_ra_suppress_all, null)
+        bfd_template                     = try(int.bfd.template, local.defaults.iosxe.devices.configuration.interfaces.tunnels.bfd.template, null)
+        bfd_enable                       = try(int.bfd.enable, local.defaults.iosxe.devices.configuration.interfaces.tunnels.bfd.enable, null)
+        bfd_local_address                = try(int.bfd.local_address, local.defaults.iosxe.devices.configuration.interfaces.tunnels.bfd.local_address, null)
+        bfd_interval                     = try(int.bfd.interval, local.defaults.iosxe.devices.configuration.interfaces.tunnels.bfd.interval, null)
+        bfd_interval_min_rx              = try(int.bfd.interval_min_rx, local.defaults.iosxe.devices.configuration.interfaces.tunnels.bfd.interval_min_rx, null)
+        bfd_interval_multiplier          = try(int.bfd.interval_multiplier, local.defaults.iosxe.devices.configuration.interfaces.tunnels.bfd.interval_multiplier, null)
+        bfd_echo                         = try(int.bfd.echo, local.defaults.iosxe.devices.configuration.interfaces.tunnels.bfd.echo, null)
+        arp_timeout                      = try(int.arp_timeout, local.defaults.iosxe.devices.configuration.interfaces.tunnels.arp_timeout, null)
+        ip_mtu                           = try(int.ip_mtu, local.defaults.iosxe.devices.configuration.interfaces.tunnels.ip_mtu, null)
+        load_interval                    = try(int.load_interval, local.defaults.iosxe.devices.configuration.interfaces.tunnels.load_interval, null)
+        snmp_trap_link_status            = try(int.snmp_trap_link_status, local.defaults.iosxe.devices.configuration.interfaces.tunnels.snmp_trap_link_status, null)
+        logging_event_link_status_enable = try(int.logging_event_link_status_enable, local.defaults.iosxe.devices.configuration.interfaces.tunnels.logging_event_link_status_enable, null)
+        tunnel_destination_ipv4          = try(int.tunnel_destination_ipv4, local.defaults.iosxe.devices.configuration.interfaces.tunnels.tunnel_destination_ipv4, null)
+        tunnel_vrf                       = try(int.tunnel_vrf, local.defaults.iosxe.devices.configuration.interfaces.tunnels.tunnel_vrf, null)
+        tunnel_mode_ipsec_ipv4           = try(int.tunnel_mode_ipsec_ipv4, local.defaults.iosxe.devices.configuration.interfaces.tunnels.tunnel_mode_ipsec_ipv4, null)
+        tunnel_protection_ipsec_profile  = try(int.tunnel_protection_ipsec_profile, local.defaults.iosxe.devices.configuration.interfaces.tunnels.tunnel_protection_ipsec_profile, null)
+        tunnel_source                    = try(int.tunnel_source, local.defaults.iosxe.devices.configuration.interfaces.tunnels.tunnel_source, null)
+        ip_igmp_version                  = try(int.igmp.version, local.defaults.iosxe.devices.configuration.interfaces.tunnels.igmp.version, null)
+      }
+    ]
+  ])
+}
+
+resource "iosxe_interface_tunnel" "tunnel" {
+  for_each = { for v in local.interfaces_tunnels : v.key => v }
+  device   = each.value.device
+
+  name                             = each.value.id
+  description                      = each.value.description
+  shutdown                         = each.value.shutdown
+  vrf_forwarding                   = each.value.vrf_forwarding
+  ipv4_address                     = each.value.ipv4_address
+  ipv4_address_mask                = each.value.ipv4_address_mask
+  ip_proxy_arp                     = each.value.ip_proxy_arp
+  ip_access_group_in               = each.value.ip_access_group_in
+  ip_access_group_in_enable        = each.value.ip_access_group_in_enable
+  ip_access_group_out              = each.value.ip_access_group_out
+  ip_access_group_out_enable       = each.value.ip_access_group_out_enable
+  ip_redirects                     = each.value.ip_redirects
+  ip_unreachables                  = each.value.ip_unreachables
+  ip_igmp_version                  = each.value.ip_igmp_version
+  ip_dhcp_relay_source_interface   = each.value.ip_dhcp_relay_source_interface
+  helper_addresses                 = each.value.helper_addresses
+  ipv6_enable                      = each.value.ipv6_enable
+  ipv6_addresses                   = each.value.ipv6_addresses
+  ipv6_link_local_addresses        = each.value.ipv6_link_local_addresses
+  ipv6_address_autoconfig_default  = each.value.ipv6_address_autoconfig_default
+  ipv6_address_dhcp                = each.value.ipv6_address_dhcp
+  ipv6_mtu                         = each.value.ipv6_mtu
+  ipv6_nd_ra_suppress_all          = each.value.ipv6_nd_ra_suppress_all
+  bfd_template                     = each.value.bfd_template
+  bfd_enable                       = each.value.bfd_enable
+  bfd_local_address                = each.value.bfd_local_address
+  bfd_interval                     = each.value.bfd_interval
+  bfd_interval_min_rx              = each.value.bfd_interval_min_rx
+  bfd_interval_multiplier          = each.value.bfd_interval_multiplier
+  bfd_echo                         = each.value.bfd_echo
+  arp_timeout                      = each.value.arp_timeout
+  ip_mtu                           = each.value.ip_mtu
+  load_interval                    = each.value.load_interval
+  snmp_trap_link_status            = each.value.snmp_trap_link_status
+  logging_event_link_status_enable = each.value.logging_event_link_status_enable
+  tunnel_destination_ipv4          = each.value.tunnel_destination_ipv4
+  tunnel_vrf                       = each.value.tunnel_vrf
+  tunnel_mode_ipsec_ipv4           = each.value.tunnel_mode_ipsec_ipv4
+  tunnel_protection_ipsec_profile  = each.value.tunnel_protection_ipsec_profile
+  tunnel_source                    = each.value.tunnel_source
+
+  depends_on = [
+    iosxe_vrf.vrf,
+    iosxe_access_list_standard.access_list_standard,
+    iosxe_access_list_extended.access_list_extended
+  ]
+}
