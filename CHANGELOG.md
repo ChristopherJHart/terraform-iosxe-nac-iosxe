@@ -1,6 +1,6 @@
 ## Unreleased
 
-- Add VRRPv3 IPv4 and FHRP module support for ethernet, VLAN, port-channel, and port-channel subinterface resources
+- Add VRRPv3 IPv4, IPv6, FHRP, and object tracking module support for ethernet, VLAN, port-channel, and port-channel subinterface resources
 - Fix `bridge_domain` member_interfaces `service_instances` attribute name (was incorrectly `service_instance` singular, causing the provider to silently drop the service-instance binding)
 
 ## 1.0.0

@@ -16,7 +16,12 @@ locals {
             preempt_delay_minimum   = try(vrrp.preempt_delay_minimum, null)
             timers_advertise        = try(vrrp.timers_advertise, null)
             description             = try(vrrp.description, null)
-            shutdown                = try(vrrp.shutdown, null)
+            tracks = try(length(vrrp.tracks) == 0, true) ? null : [for track in vrrp.tracks : {
+              object_id = track.object_id
+              decrement = try(track.decrement, null)
+              shutdown  = try(track.shutdown, null)
+            }]
+            shutdown = try(vrrp.shutdown, null)
           }
         ]
       ],
@@ -35,7 +40,12 @@ locals {
             preempt_delay_minimum   = try(vrrp.preempt_delay_minimum, null)
             timers_advertise        = try(vrrp.timers_advertise, null)
             description             = try(vrrp.description, null)
-            shutdown                = try(vrrp.shutdown, null)
+            tracks = try(length(vrrp.tracks) == 0, true) ? null : [for track in vrrp.tracks : {
+              object_id = track.object_id
+              decrement = try(track.decrement, null)
+              shutdown  = try(track.shutdown, null)
+            }]
+            shutdown = try(vrrp.shutdown, null)
           }
         ]
       ],
@@ -54,7 +64,12 @@ locals {
             preempt_delay_minimum   = try(vrrp.preempt_delay_minimum, null)
             timers_advertise        = try(vrrp.timers_advertise, null)
             description             = try(vrrp.description, null)
-            shutdown                = try(vrrp.shutdown, null)
+            tracks = try(length(vrrp.tracks) == 0, true) ? null : [for track in vrrp.tracks : {
+              object_id = track.object_id
+              decrement = try(track.decrement, null)
+              shutdown  = try(track.shutdown, null)
+            }]
+            shutdown = try(vrrp.shutdown, null)
           }
         ]
       ],
@@ -74,7 +89,12 @@ locals {
               preempt_delay_minimum   = try(vrrp.preempt_delay_minimum, null)
               timers_advertise        = try(vrrp.timers_advertise, null)
               description             = try(vrrp.description, null)
-              shutdown                = try(vrrp.shutdown, null)
+              tracks = try(length(vrrp.tracks) == 0, true) ? null : [for track in vrrp.tracks : {
+                object_id = track.object_id
+                decrement = try(track.decrement, null)
+                shutdown  = try(track.shutdown, null)
+              }]
+              shutdown = try(vrrp.shutdown, null)
             }
           ]
         ]
@@ -96,6 +116,7 @@ resource "iosxe_vrrp" "vrrp" {
   preempt_delay_minimum   = each.value.preempt_delay_minimum
   timers_advertise        = each.value.timers_advertise
   description             = each.value.description
+  tracks                  = each.value.tracks
   shutdown                = each.value.shutdown
 
   depends_on = [
@@ -121,6 +142,7 @@ resource "iosxe_vrrp" "vrrp_unmanaged" {
   preempt_delay_minimum   = each.value.preempt_delay_minimum
   timers_advertise        = each.value.timers_advertise
   description             = each.value.description
+  tracks                  = each.value.tracks
   shutdown                = each.value.shutdown
 
   depends_on = [
