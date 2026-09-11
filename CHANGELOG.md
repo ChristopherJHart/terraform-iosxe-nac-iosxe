@@ -1,5 +1,6 @@
 ## Unreleased
 
+- Add `iosxe_crypto_gdoi` resource mapping for GET VPN GDOI group and key server configuration (`crypto gdoi group`), including group identity, server local address, rekey authentication, rekey transport unicast, SA IPsec entries with replay counter window-size, and G-IKEv2 profile association
 - Fix `bridge_domain` member_interfaces `service_instances` attribute name (was incorrectly `service_instance` singular, causing the provider to silently drop the service-instance binding)
 
 ## 1.0.0
