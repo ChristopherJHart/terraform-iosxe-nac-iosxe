@@ -122,6 +122,7 @@ No outputs.
 | [iosxe_crypto_ikev2_proposal.crypto_ikev2_proposal](https://registry.terraform.io/providers/CiscoDevNet/iosxe/latest/docs/resources/crypto_ikev2_proposal) | resource |
 | [iosxe_crypto_ipsec_profile.crypto_ipsec_profile](https://registry.terraform.io/providers/CiscoDevNet/iosxe/latest/docs/resources/crypto_ipsec_profile) | resource |
 | [iosxe_crypto_ipsec_transform_set.crypto_ipsec_transform_set](https://registry.terraform.io/providers/CiscoDevNet/iosxe/latest/docs/resources/crypto_ipsec_transform_set) | resource |
+| [iosxe_crypto_map_gdoi.crypto_map_gdoi](https://registry.terraform.io/providers/CiscoDevNet/iosxe/latest/docs/resources/crypto_map_gdoi) | resource |
 | [iosxe_crypto_pki.crypto_pki](https://registry.terraform.io/providers/CiscoDevNet/iosxe/latest/docs/resources/crypto_pki) | resource |
 | [iosxe_cts.cts](https://registry.terraform.io/providers/CiscoDevNet/iosxe/latest/docs/resources/cts) | resource |
 | [iosxe_device_sensor.device_sensor](https://registry.terraform.io/providers/CiscoDevNet/iosxe/latest/docs/resources/device_sensor) | resource |
