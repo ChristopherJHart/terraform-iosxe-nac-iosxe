@@ -330,6 +330,7 @@ locals {
         server_local_address_ipv4                      = try(group.server_local_address_ipv4, null)
         server_local_gdoi                              = try(group.server_local_gdoi, null)
         server_local_gikev2                            = try(group.server_local_gikev2, null)
+        server_local_pfs                               = try(group.server_local_pfs, null)
         server_local_authorization_address_ipv4        = try(group.server_local_authorization_address_ipv4, null)
         server_local_authorization_identity            = try(group.server_local_authorization_identity, null)
         server_local_registration_interface            = try(group.server_local_registration_interface, null)
@@ -343,6 +344,10 @@ locals {
         server_local_rekey_sig_hash_algorithm          = try(group.server_local_rekey_sig_hash_algorithm, null)
         server_local_rekey_transport_unicast           = try(group.server_local_rekey_transport_unicast, null)
         server_local_redundancy                        = try(group.server_local_redundancy, null)
+        server_local_redundancy_local_priority         = try(group.server_local_redundancy_local_priority, null)
+        server_local_redundancy_peer_address_ipv4      = try(group.server_local_redundancy_peer_address_ipv4, null)
+        server_local_redundancy_protocol_pdu           = try(group.server_local_redundancy_protocol_pdu, null)
+        server_local_redundancy_protocol_version       = try(group.server_local_redundancy_protocol_version, null)
         server_local_sa_receive_only                   = try(group.server_local_sa_receive_only, null)
         server_local_sa_ipsec = try(length(group.server_local_sa_ipsec) == 0, true) ? null : [for e in group.server_local_sa_ipsec : {
           sequence                   = e.sequence
@@ -370,6 +375,7 @@ resource "iosxe_crypto_gdoi" "crypto_gdoi" {
   server_local_address_ipv4                      = each.value.server_local_address_ipv4
   server_local_gdoi                              = each.value.server_local_gdoi
   server_local_gikev2                            = each.value.server_local_gikev2
+  server_local_pfs                               = each.value.server_local_pfs
   server_local_authorization_address_ipv4        = each.value.server_local_authorization_address_ipv4
   server_local_authorization_identity            = each.value.server_local_authorization_identity
   server_local_registration_interface            = each.value.server_local_registration_interface
@@ -383,6 +389,10 @@ resource "iosxe_crypto_gdoi" "crypto_gdoi" {
   server_local_rekey_sig_hash_algorithm          = each.value.server_local_rekey_sig_hash_algorithm
   server_local_rekey_transport_unicast           = each.value.server_local_rekey_transport_unicast
   server_local_redundancy                        = each.value.server_local_redundancy
+  server_local_redundancy_local_priority         = each.value.server_local_redundancy_local_priority
+  server_local_redundancy_peer_address_ipv4      = each.value.server_local_redundancy_peer_address_ipv4
+  server_local_redundancy_protocol_pdu           = each.value.server_local_redundancy_protocol_pdu
+  server_local_redundancy_protocol_version       = each.value.server_local_redundancy_protocol_version
   server_local_sa_receive_only                   = each.value.server_local_sa_receive_only
   server_local_sa_ipsec                          = each.value.server_local_sa_ipsec
   server_address_ipv4                            = each.value.server_address_ipv4
