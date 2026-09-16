@@ -41,21 +41,22 @@ locals {
           auto_cost_reference_bandwidth                        = try(af.auto_cost_reference_bandwidth, null)
           timers_lsa_arrival                                   = try(af.timers_lsa_arrival, null)
           timers_pacing_lsa_group                              = try(af.timers_pacing_lsa_group, null)
-          timers_throttle_lsa_all_delay                        = try(af.timers_throttle_lsa_delay, null)
-          timers_throttle_lsa_all_min_delay                    = try(af.timers_throttle_lsa_min_delay, null)
-          timers_throttle_lsa_all_max_delay                    = try(af.timers_throttle_lsa_max_delay, null)
+          timers_throttle_lsa_all_delay                        = try(af.timers_throttle_lsa_all_delay, null)
+          timers_throttle_lsa_all_min_delay                    = try(af.timers_throttle_lsa_all_min_delay, null)
+          timers_throttle_lsa_all_max_delay                    = try(af.timers_throttle_lsa_all_max_delay, null)
           timers_throttle_spf_delay                            = try(af.timers_throttle_spf_delay, null)
           timers_throttle_spf_min_delay                        = try(af.timers_throttle_spf_min_delay, null)
           timers_throttle_spf_max_delay                        = try(af.timers_throttle_spf_max_delay, null)
-          max_metric_router_lsa_config                         = try(af.max_metric_router_lsa, null)
-          max_metric_router_lsa_config_stub_prefix_lsa         = try(af.max_metric_router_lsa_stub_prefix_lsa, null)
-          max_metric_router_lsa_config_inter_area_lsas_metric  = try(af.max_metric_router_lsa_inter_area_lsas_metric, null)
-          max_metric_router_lsa_config_external_lsa_metric     = try(af.max_metric_router_lsa_external_lsa_metric, null)
+          max_metric_router_lsa_config                         = try(af.max_metric_router_lsa_config, null)
+          max_metric_router_lsa_config_stub_prefix_lsa         = try(af.max_metric_router_lsa_config_stub_prefix_lsa, null)
+          max_metric_router_lsa_config_inter_area_lsas_metric  = try(af.max_metric_router_lsa_config_inter_area_lsas_metric, null)
+          max_metric_router_lsa_config_external_lsa_metric     = try(af.max_metric_router_lsa_config_external_lsa_metric, null)
           max_metric_router_config_lsa_on_startup_time         = try(af.max_metric_router_lsa_on_startup_time, null)
           max_metric_router_config_lsa_on_startup_wait_for_bgp = try(af.max_metric_router_lsa_on_startup_wait_for_bgp, null)
           redistribute_static                                  = try(af.redistribute_static, null)
           redistribute_connected                               = try(af.redistribute_connected, null)
           passive_interface_default                            = try(af.passive_interface_default, null)
+          passive_interface                                    = try(af.passive_interface, null)
           summary_prefix = try(length(af.summary_prefixes) == 0, true) ? null : [for sp in af.summary_prefixes : {
             prefix = try(sp.prefix, null)
           }]
@@ -98,21 +99,22 @@ locals {
           auto_cost_reference_bandwidth                        = try(af.auto_cost_reference_bandwidth, null)
           timers_lsa_arrival                                   = try(af.timers_lsa_arrival, null)
           timers_pacing_lsa_group                              = try(af.timers_pacing_lsa_group, null)
-          timers_throttle_lsa_all_delay                        = try(af.timers_throttle_lsa_delay, null)
-          timers_throttle_lsa_all_min_delay                    = try(af.timers_throttle_lsa_min_delay, null)
-          timers_throttle_lsa_all_max_delay                    = try(af.timers_throttle_lsa_max_delay, null)
+          timers_throttle_lsa_all_delay                        = try(af.timers_throttle_lsa_all_delay, null)
+          timers_throttle_lsa_all_min_delay                    = try(af.timers_throttle_lsa_all_min_delay, null)
+          timers_throttle_lsa_all_max_delay                    = try(af.timers_throttle_lsa_all_max_delay, null)
           timers_throttle_spf_delay                            = try(af.timers_throttle_spf_delay, null)
           timers_throttle_spf_min_delay                        = try(af.timers_throttle_spf_min_delay, null)
           timers_throttle_spf_max_delay                        = try(af.timers_throttle_spf_max_delay, null)
-          max_metric_router_lsa_config                         = try(af.max_metric_router_lsa, null)
-          max_metric_router_lsa_config_stub_prefix_lsa         = try(af.max_metric_router_lsa_stub_prefix_lsa, null)
-          max_metric_router_lsa_config_inter_area_lsas_metric  = try(af.max_metric_router_lsa_inter_area_lsas_metric, null)
-          max_metric_router_lsa_config_external_lsa_metric     = try(af.max_metric_router_lsa_external_lsa_metric, null)
+          max_metric_router_lsa_config                         = try(af.max_metric_router_lsa_config, null)
+          max_metric_router_lsa_config_stub_prefix_lsa         = try(af.max_metric_router_lsa_config_stub_prefix_lsa, null)
+          max_metric_router_lsa_config_inter_area_lsas_metric  = try(af.max_metric_router_lsa_config_inter_area_lsas_metric, null)
+          max_metric_router_lsa_config_external_lsa_metric     = try(af.max_metric_router_lsa_config_external_lsa_metric, null)
           max_metric_router_config_lsa_on_startup_time         = try(af.max_metric_router_lsa_on_startup_time, null)
           max_metric_router_config_lsa_on_startup_wait_for_bgp = try(af.max_metric_router_lsa_on_startup_wait_for_bgp, null)
           redistribute_static                                  = try(af.redistribute_static, null)
           redistribute_connected                               = try(af.redistribute_connected, null)
           passive_interface_default                            = try(af.passive_interface_default, null)
+          passive_interface                                    = try(af.passive_interface, null)
           summary_prefix = try(length(af.summary_prefixes) == 0, true) ? null : [for sp in af.summary_prefixes : {
             prefix = try(sp.prefix, null)
           }]
@@ -183,6 +185,7 @@ resource "iosxe_ospfv3_address_family_ipv4_vrf" "ospfv3_af_ipv4_vrf" {
   redistribute_static                                  = each.value.redistribute_static
   redistribute_connected                               = each.value.redistribute_connected
   passive_interface_default                            = each.value.passive_interface_default
+  passive_interface                                    = each.value.passive_interface
   summary_prefix                                       = each.value.summary_prefix
   areas                                                = each.value.areas
 
@@ -230,6 +233,7 @@ resource "iosxe_ospfv3_address_family_ipv6_vrf" "ospfv3_af_ipv6_vrf" {
   redistribute_static                                  = each.value.redistribute_static
   redistribute_connected                               = each.value.redistribute_connected
   passive_interface_default                            = each.value.passive_interface_default
+  passive_interface                                    = each.value.passive_interface
   summary_prefix                                       = each.value.summary_prefix
   areas                                                = each.value.areas
 
