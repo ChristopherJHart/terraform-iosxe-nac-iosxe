@@ -79,4 +79,6 @@ resource "iosxe_access_list_ipv6" "access_list_ipv6" {
 
   name    = each.value.name
   entries = each.value.entries
+
+  depends_on = [iosxe_object_group.object_group]
 }
