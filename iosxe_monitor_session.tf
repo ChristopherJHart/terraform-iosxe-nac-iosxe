@@ -30,4 +30,13 @@ resource "iosxe_monitor_session" "monitor_session" {
   session_id            = each.value.session_id
   source_interface      = each.value.source_interface
   destination_interface = each.value.destination_interface
+
+  depends_on = [
+    iosxe_interface_ethernet.ethernet,
+    iosxe_interface_ethernet.ethernet_sub,
+    iosxe_interface_loopback.loopback,
+    iosxe_interface_vlan.vlan,
+    iosxe_interface_port_channel.port_channel,
+    iosxe_interface_port_channel_subinterface.port_channel_subinterface
+  ]
 }
