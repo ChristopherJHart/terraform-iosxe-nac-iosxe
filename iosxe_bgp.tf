@@ -267,7 +267,8 @@ resource "iosxe_bgp_address_family_ipv6" "bgp_address_family_ipv6" {
 
   depends_on = [
     iosxe_access_list_standard.access_list_standard,
-    iosxe_access_list_extended.access_list_extended
+    iosxe_access_list_extended.access_list_extended,
+    iosxe_ipv6_prefix_list.ipv6_prefix_list
   ]
 }
 
