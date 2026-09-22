@@ -3021,7 +3021,8 @@ resource "iosxe_interface_tunnel" "tunnel" {
     iosxe_access_list_extended.access_list_extended,
     iosxe_crypto_ipsec_profile.crypto_ipsec_profile,
     iosxe_policy_map.policy_map,
-    iosxe_flow_monitor.flow_monitor
+    iosxe_flow_monitor.flow_monitor,
+    iosxe_isis.isis
   ]
 }
 
