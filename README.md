@@ -251,6 +251,7 @@ No outputs.
 | [iosxe_vrf.vrf](https://registry.terraform.io/providers/CiscoDevNet/iosxe/latest/docs/resources/vrf) | resource |
 | [iosxe_vtp.vtp](https://registry.terraform.io/providers/CiscoDevNet/iosxe/latest/docs/resources/vtp) | resource |
 | [iosxe_wireless_ap_join_profile.wireless_ap_join_profile](https://registry.terraform.io/providers/CiscoDevNet/iosxe/latest/docs/resources/wireless_ap_join_profile) | resource |
+| [iosxe_wireless_site_tag.wireless_site_tag](https://registry.terraform.io/providers/CiscoDevNet/iosxe/latest/docs/resources/wireless_site_tag) | resource |
 | [iosxe_zone_pair_security.zone_pair_security](https://registry.terraform.io/providers/CiscoDevNet/iosxe/latest/docs/resources/zone_pair_security) | resource |
 | [iosxe_zone_security.zone_security](https://registry.terraform.io/providers/CiscoDevNet/iosxe/latest/docs/resources/zone_security) | resource |
 | [local_sensitive_file.model](https://registry.terraform.io/providers/hashicorp/local/latest/docs/resources/sensitive_file) | resource |
