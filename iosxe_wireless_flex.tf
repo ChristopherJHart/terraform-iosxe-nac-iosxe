@@ -5,16 +5,16 @@ locals {
         key                     = format("%s/%s", device.name, fp.name)
         device                  = device.name
         name                    = fp.name
-        description             = try(fp.description, local.defaults.iosxe.configuration.wireless.flex_profiles.description, null)
-        native_vlan_id          = try(fp.native_vlan_id, local.defaults.iosxe.configuration.wireless.flex_profiles.native_vlan_id, null)
-        arp_caching             = try(fp.arp_caching, local.defaults.iosxe.configuration.wireless.flex_profiles.arp_caching, null)
-        fallback_radio_shut     = try(fp.fallback_radio_shut, local.defaults.iosxe.configuration.wireless.flex_profiles.fallback_radio_shut, null)
-        efficient_image_upgrade = try(fp.efficient_image_upgrade, local.defaults.iosxe.configuration.wireless.flex_profiles.efficient_image_upgrade, null)
+        description             = try(fp.description, null)
+        native_vlan_id          = try(fp.native_vlan_id, null)
+        arp_caching             = try(fp.arp_caching, null)
+        fallback_radio_shut     = try(fp.fallback_radio_shut, null)
+        efficient_image_upgrade = try(fp.efficient_image_upgrade, null)
 
         vlan_names = try(length(fp.vlan_names) == 0, true) ? null : [
           for vn in fp.vlan_names : {
             name    = vn.name
-            vlan_id = try(vn.vlan_id, local.defaults.iosxe.configuration.wireless.flex_profiles.vlan_names.vlan_id, null)
+            vlan_id = try(vn.vlan_id, null)
           }
         ]
 
