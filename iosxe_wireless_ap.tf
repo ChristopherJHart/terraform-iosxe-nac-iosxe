@@ -173,10 +173,10 @@ locals {
         key             = format("%s/%s", device.name, tag.name)
         device          = device.name
         site_tag_name   = tag.name
-        description     = try(tag.description, local.defaults.iosxe.configuration.wireless.site_tags.description, null)
-        ap_join_profile = try(tag.ap_join_profile, local.defaults.iosxe.configuration.wireless.site_tags.ap_join_profile, null)
-        local_site      = try(tag.local_site, local.defaults.iosxe.configuration.wireless.site_tags.local_site, null)
-        flex_profile    = try(tag.flex_profile, local.defaults.iosxe.configuration.wireless.site_tags.flex_profile, null)
+        description     = try(tag.description, null)
+        ap_join_profile = try(tag.ap_join_profile, null)
+        local_site      = try(tag.local_site, null)
+        flex_profile    = try(tag.flex_profile, null)
       }
     ]
   ])
@@ -191,4 +191,6 @@ resource "iosxe_wireless_site_tag" "wireless_site_tag" {
   ap_join_profile = each.value.ap_join_profile
   local_site      = each.value.local_site
   flex_profile    = each.value.flex_profile
+
+  depends_on = [iosxe_wireless_ap_join_profile.wireless_ap_join_profile]
 }
