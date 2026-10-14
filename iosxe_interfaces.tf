@@ -2875,7 +2875,9 @@ locals {
         }]
         ip_nhrp_maps = try(length(int.ip_nhrp_maps) == 0, true) ? null : [for m in int.ip_nhrp_maps : {
           dest_ipv4 = try(m.dest_ipv4, null)
-          nbma_ipv4 = try(m.nbma_ipv4, null)
+          nbma_ipv4s = try(length(m.nbma_ipv4s) == 0, true) ? null : [for n in m.nbma_ipv4s : {
+            ipv4 = n
+          }]
         }]
         ip_nhrp_map_multicast_dynamic         = try(int.ip_nhrp_map_multicast_dynamic, null)
         ip_nhrp_map_multicast_nbma_ipv4       = try(int.ip_nhrp_map_multicast_nbma_ipv4, null)
